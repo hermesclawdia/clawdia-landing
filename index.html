@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clawdia — Secretária pessoal via IA no WhatsApp</title>
+  <meta name="description" content="Tenha uma secretária pessoal no WhatsApp para resolver agendamentos, compras, contas, e-mails, lembretes e tarefas operacionais do dia a dia." />
+  <meta property="og:title" content="Clawdia — sua secretária pessoal no WhatsApp" />
+  <meta property="og:description" content="Pare de viver apagando incêndios. Delegue tarefas reais do dia a dia para uma assistente pessoal via IA." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f6f9fc;
+      --ink: #061b31;
+      --text: #64748d;
+      --label: #273951;
+      --purple: #533afd;
+      --purple-hover: #4434d4;
+      --indigo: #1c1e54;
+      --ruby: #ea2261;
+      --magenta: #f96bee;
+      --green: #15be53;
+      --border: #e5edf5;
+      --border-purple: #b9b9f9;
+      --shadow: rgba(50,50,93,.25) 0 30px 45px -30px, rgba(0,0,0,.10) 0 18px 36px -18px;
+      --shadow-soft: rgba(23,23,23,.08) 0 15px 35px 0;
+      --radius: 8px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Source Sans 3', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      font-feature-settings: "ss01";
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,.84);
+      border-bottom: 1px solid rgba(229,237,245,.9);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 600; letter-spacing: -.02em; font-size: 20px; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--purple), var(--ruby) 55%, var(--magenta)); box-shadow: var(--shadow); font-weight: 700; }
+    .nav-links { display: none; gap: 22px; align-items: center; color: var(--label); font-size: 15px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 6px; padding: 13px 18px; background: var(--purple); color: white; font-family: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: .2s ease; box-shadow: rgba(50,50,93,.22) 0 15px 30px -16px, rgba(0,0,0,.12) 0 8px 18px -12px; }
+    .btn:hover { background: var(--purple-hover); transform: translateY(-1px); }
+    .btn.secondary { background: #fff; color: var(--purple); border: 1px solid var(--border-purple); box-shadow: none; }
+    .btn.dark { background: #fff; color: var(--indigo); }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,.88); color: var(--label); font-size: 14px; box-shadow: rgba(23,23,23,.06) 0 8px 22px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 6px rgba(21,190,83,.12); }
+
+    .hero { position: relative; padding: 48px 0 64px; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: -180px -120px auto auto; width: 520px; height: 520px; background: radial-gradient(circle, rgba(249,107,238,.30), rgba(83,58,253,.18) 45%, transparent 68%); pointer-events: none; }
+    .hero-grid { display: grid; gap: 34px; align-items: center; position: relative; }
+    .eyebrow { color: var(--ruby); font-weight: 600; letter-spacing: .02em; text-transform: uppercase; font-size: 13px; margin: 0 0 12px; }
+    h1, h2, h3 { color: var(--ink); margin: 0; font-weight: 300; letter-spacing: -.035em; line-height: 1.04; }
+    h1 { font-size: clamp(42px, 9vw, 74px); max-width: 920px; }
+    h2 { font-size: clamp(34px, 6vw, 54px); }
+    h3 { font-size: 25px; letter-spacing: -.02em; }
+    p { margin: 0; line-height: 1.5; }
+    .lead { font-size: clamp(19px, 3vw, 24px); color: var(--label); margin-top: 22px; max-width: 760px; font-weight: 300; }
+    .pain-list { margin: 28px 0 0; display: grid; gap: 10px; max-width: 740px; }
+    .pain { display: flex; gap: 10px; align-items: flex-start; font-size: 17px; color: var(--text); }
+    .pain b { color: var(--ink); font-weight: 500; }
+    .turn { margin-top: 30px; padding: 18px; border-left: 4px solid var(--purple); background: linear-gradient(90deg, rgba(83,58,253,.08), transparent); color: var(--ink); font-size: 23px; line-height: 1.2; font-weight: 300; border-radius: 0 8px 8px 0; }
+    .hero-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow); }
+    .phone { max-width: 390px; margin: 0 auto; border: 10px solid #101828; border-radius: 34px; padding: 14px; background: #eef4f8; box-shadow: var(--shadow); }
+    .phone-top { height: 24px; display: flex; justify-content: center; }
+    .speaker { width: 76px; height: 6px; border-radius: 999px; background: #101828; opacity: .22; }
+    .chat { display: grid; gap: 10px; }
+    .bubble { padding: 10px 12px; border-radius: 14px; font-size: 14px; line-height: 1.28; width: fit-content; max-width: 92%; box-shadow: rgba(23,23,23,.06) 0 6px 16px; }
+    .bubble.user { justify-self: end; background: #dcf8c6; color: #173b24; border-bottom-right-radius: 4px; }
+    .bubble.ai { background: #fff; color: var(--label); border-bottom-left-radius: 4px; }
+    .stamp { display: block; color: #8da0b5; font-size: 11px; margin-top: 4px; }
+    .form-card { margin-top: 26px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 14px; box-shadow: var(--shadow-soft); max-width: 660px; }
+    .capture { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    input { width: 100%; border: 1px solid var(--border); border-radius: 7px; padding: 15px 14px; font: inherit; font-size: 17px; color: var(--ink); outline: 0; }
+    input:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(83,58,253,.10); }
+    .microcopy { margin-top: 10px; font-size: 13px; color: var(--text); }
+    .risk { color: var(--green); font-weight: 600; }
+
+    section { padding: 62px 0; }
+    .section-head { max-width: 760px; margin-bottom: 30px; }
+    .section-head p { margin-top: 14px; font-size: 19px; color: var(--text); }
+    .vsl { background: var(--indigo); color: rgba(255,255,255,.75); position: relative; overflow: hidden; }
+    .vsl h2, .vsl h3 { color: #fff; }
+    .vsl::before { content:""; position:absolute; width: 560px; height:560px; border-radius:50%; background: radial-gradient(circle, rgba(249,107,238,.20), transparent 65%); right:-220px; top:-180px; }
+    .video-box { position: relative; z-index:1; display: grid; gap: 20px; }
+    .video-placeholder { border: 1px solid rgba(255,255,255,.16); background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); border-radius: 16px; min-height: 240px; display: grid; place-items: center; text-align: center; padding: 24px; box-shadow: rgba(3,3,39,.25) 0 24px 60px -24px; }
+    .play { width: 76px; height: 76px; border-radius: 50%; background: #fff; color: var(--purple); display: grid; place-items: center; margin: 0 auto 16px; font-size: 28px; box-shadow: rgba(0,0,0,.2) 0 18px 45px -18px; }
+    .script { display: grid; gap: 12px; }
+    .script-step { padding: 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; background: rgba(255,255,255,.06); }
+    .script-step b { color: #fff; display: block; margin-bottom: 4px; }
+
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 22px; box-shadow: rgba(23,23,23,.06) 0 10px 30px; }
+    .card:hover { box-shadow: var(--shadow); }
+    .before-after { display: grid; gap: 10px; margin-top: 14px; }
+    .before, .after { padding: 12px; border-radius: 8px; font-size: 16px; }
+    .before { background: #fff4f6; color: #8a1f3d; border: 1px solid #ffd7df; }
+    .after { background: #effbf3; color: #0b7131; border: 1px solid rgba(21,190,83,.28); }
+    .label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; display: block; margin-bottom: 4px; opacity: .75; }
+
+    .imagine { background: linear-gradient(180deg, #fff, #f6f9fc); }
+    .storyline { display: grid; gap: 18px; }
+    .story { display: flex; gap: 14px; align-items: flex-start; }
+    .num { flex: 0 0 36px; width:36px; height:36px; border-radius: 8px; display:grid; place-items:center; background: var(--purple); color:#fff; font-family:'Source Code Pro', monospace; font-size:14px; box-shadow: var(--shadow); }
+    .conversation-section { background: var(--bg-soft); }
+    .conversation-grid { display: grid; gap: 18px; }
+    .conversation-card { background: #fff; border:1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: var(--shadow-soft); }
+    .chatline { margin: 10px 0; padding: 12px; border-radius: 12px; font-size: 15px; line-height: 1.35; }
+    .chatline.me { margin-left: 28px; background: #dcf8c6; color: #173b24; }
+    .chatline.bot { margin-right: 28px; background: #f4f7fb; color: var(--label); }
+
+    .how { counter-reset: step; }
+    .steps { display: grid; gap: 14px; }
+    .step { position: relative; padding: 22px; border: 1px solid var(--border); border-radius: 12px; background: #fff; box-shadow: rgba(23,23,23,.06) 0 10px 30px; }
+    .step::before { counter-increment: step; content: counter(step); width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--ink); color: #fff; font-family: 'Source Code Pro', monospace; margin-bottom: 12px; }
+
+    .objections { background: #fff; }
+    .faq { display: grid; gap: 12px; }
+    details { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 17px 18px; box-shadow: rgba(23,23,23,.04) 0 6px 18px; }
+    summary { cursor: pointer; color: var(--ink); font-size: 19px; font-weight: 500; }
+    details p { margin-top: 10px; font-size: 17px; }
+    .pricing { background: linear-gradient(135deg, var(--indigo), #0d253d); color: rgba(255,255,255,.74); }
+    .pricing h2, .pricing h3 { color:#fff; }
+    .pricing-grid { display: grid; gap: 18px; }
+    .price-card { border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.08); border-radius: 16px; padding: 24px; }
+    .price-card.featured { background: #fff; color: var(--text); transform: none; box-shadow: rgba(0,0,0,.20) 0 30px 70px -32px; }
+    .price-card.featured h3 { color: var(--ink); }
+    .tag { display:inline-flex; background: rgba(21,190,83,.18); color:#86efac; border:1px solid rgba(21,190,83,.35); border-radius:999px; padding:5px 9px; font-size:13px; margin-bottom: 12px; }
+    .featured .tag { color:#108c3d; }
+
+    .final { padding: 74px 0; text-align: center; background: radial-gradient(circle at 50% 0, rgba(83,58,253,.16), transparent 42%), #fff; }
+    .final h2 { max-width: 900px; margin: 0 auto; }
+    .final p { max-width: 720px; margin: 18px auto 0; font-size: 21px; color: var(--label); }
+    .cta-row { display: flex; flex-direction: column; gap: 10px; justify-content: center; align-items: stretch; margin-top: 24px; }
+    .disclaimer { margin-top: 14px; color: #8da0b5; font-size: 13px; }
+    footer { padding: 26px 0; border-top: 1px solid var(--border); color: #8da0b5; font-size: 14px; }
+    .footer-inner { display: flex; flex-direction: column; gap: 8px; justify-content: space-between; }
+
+    @media (min-width: 760px) {
+      .nav-links { display: flex; }
+      .hero { padding: 76px 0 88px; }
+      .hero-grid { grid-template-columns: 1.15fr .85fr; }
+      .capture { grid-template-columns: 1fr auto; }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .conversation-grid { grid-template-columns: repeat(3, 1fr); }
+      .steps { grid-template-columns: repeat(3, 1fr); }
+      .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+      .price-card.featured { transform: translateY(-10px); }
+      .video-box { grid-template-columns: 1.05fr .95fr; align-items: start; }
+      .cta-row { flex-direction: row; align-items: center; }
+      .footer-inner { flex-direction: row; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Clawdia"><span class="brand-mark">C</span> Clawdia</a>
+      <div class="nav-links">
+        <a href="#faz">O que faz</a>
+        <a href="#como">Como funciona</a>
+        <a href="#preco">Planos</a>
+        <a class="btn" href="#ativar">Ativar grátis</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="pill"><span class="dot"></span> Vagas limitadas para os primeiros usuários</span>
+          <p class="eyebrow" style="margin-top:22px">Você não está sem disciplina. Está sobrecarregado.</p>
+          <h1>Sua vida virou uma lista infinita de pequenas urgências.</h1>
+          <p class="lead">Conta que vence hoje. Consulta que você ainda não marcou. Compra que ficou para depois. E-mail esperando resposta. Recado esquecido. Tudo pequeno — até ocupar sua cabeça inteira.</p>
+          <div class="pain-list" aria-label="Dores comuns">
+            <div class="pain">→ <span><b>Você perde tempo agendando coisas simples</b> e ainda precisa acompanhar se deu certo.</span></div>
+            <div class="pain">→ <span><b>Você vive apagando incêndios</b>, com a sensação constante de estar atrasado.</span></div>
+            <div class="pain">→ <span><b>Você gasta energia mental</b> com tarefas que não exigem seu talento — só sua atenção.</span></div>
+          </div>
+          <div class="turn">E se tudo isso simplesmente deixasse de ser sua responsabilidade?</div>
+          <h2 style="margin-top:28px">Tenha uma secretária pessoal no WhatsApp que resolve sua vida por você.</h2>
+          <p class="lead">A Clawdia executa tarefas reais do seu dia a dia: agenda, compras, contas, e-mails, viagens, serviços, lembretes e organização pessoal — tudo por conversa.</p>
+          <div id="ativar" class="form-card">
+            <form class="capture" onsubmit="return handleLead(event)">
+              <input id="phone" name="whatsapp" inputmode="tel" autocomplete="tel" placeholder="Digite seu WhatsApp com DDD" aria-label="Seu WhatsApp" required />
+              <button class="btn" type="submit">Ativar minha secretária grátis agora</button>
+            </form>
+            <p class="microcopy"><span class="risk">Teste grátis.</span> Sem cartão no início. Entraremos em contato pelo WhatsApp informado quando sua vaga for liberada.</p>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Exemplo de conversa com Clawdia">
+          <div class="phone">
+            <div class="phone-top"><div class="speaker"></div></div>
+            <div class="chat">
+              <div class="bubble user">Clawdia, marca dentista para mim essa semana, de preferência terça depois das 15h.</div>
+              <div class="bubble ai">Claro. Vou buscar horários, confirmar preço e te mandar as opções antes de agendar.<span class="stamp">09:42</span></div>
+              <div class="bubble ai">Encontrei terça 16h30 e quinta 15h. Terça fica R$ 180. Posso confirmar?<span class="stamp">09:51</span></div>
+              <div class="bubble user">Pode.</div>
+              <div class="bubble ai">Agendado. Também coloquei no seu calendário e vou te lembrar 2h antes. ✅<span class="stamp">09:53</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section class="vsl" id="vsl">
+      <div class="container video-box">
+        <div>
+          <p class="eyebrow">Assista antes de continuar</p>
+          <h2>O vídeo que mostra por que sua rotina parece sempre pesada — mesmo quando “não aconteceu nada demais”.</h2>
+          <p class="lead" style="color:rgba(255,255,255,.72)">VSL planejada para explicar a dor, demonstrar a solução e levar o visitante à ativação gratuita.</p>
+          <div class="video-placeholder" role="img" aria-label="Placeholder para vídeo de vendas">
+            <div>
+              <div class="play">▶</div>
+              <h3>VSL: 3 minutos para recuperar horas por semana</h3>
+              <p>Inserir vídeo final aqui. O roteiro completo já está estruturado ao lado.</p>
+            </div>
+          </div>
+        </div>
+        <div class="script">
+          <div class="script-step"><b>1. Gancho inicial</b>“Você não precisa de mais produtividade. Precisa parar de ser a pessoa responsável por tudo.”</div>
+          <div class="script-step"><b>2. Amplificação da dor</b>Mostrar contas, agenda, compras, e-mails e microdecisões drenando energia todos os dias.</div>
+          <div class="script-step"><b>3. Apresentação da solução</b>Uma secretária pessoal via WhatsApp que entende pedidos e executa tarefas com aprovação.</div>
+          <div class="script-step"><b>4. Demonstração prática</b>“Marque minha consulta”, “pesquise passagem”, “cobre esse retorno”, “organize meus gastos”.</div>
+          <div class="script-step"><b>5. Prova de valor</b>Se a Clawdia economiza 3 horas por semana, você recupera mais de 12 horas por mês.</div>
+          <div class="script-step"><b>6. Objeções + CTA</b>Seguro, simples, sob seu controle. Teste grátis enquanto há vagas na fase inicial.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="imagine">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Imagine sua vida assim…</p>
+          <h2>Você acorda sabendo que as pontas soltas não estão mais soltas.</h2>
+          <p>Não porque você virou uma máquina de organização. Mas porque agora existe alguém cuidando do operacional para você.</p>
+        </div>
+        <div class="storyline grid grid-3">
+          <div class="story card"><span class="num">01</span><div><h3>Manhã leve</h3><p>Você abre o WhatsApp e vê que a consulta foi marcada, a conta foi lembrada e o orçamento já chegou.</p></div></div>
+          <div class="story card"><span class="num">02</span><div><h3>Dia sob controle</h3><p>Enquanto trabalha, a Clawdia faz follow-up, pesquisa opções, organiza horários e te chama só para aprovar.</p></div></div>
+          <div class="story card"><span class="num">03</span><div><h3>Noite livre</h3><p>Você para de carregar tarefas na cabeça e volta a ter tempo para família, descanso ou o que realmente importa.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faz">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">O que sua secretária faz por você</p>
+          <h2>Não é sobre “automação”. É sobre tirar peso da sua cabeça.</h2>
+          <p>Cada tarefa abaixo representa uma pequena fricção que deixa de roubar seu tempo.</p>
+        </div>
+        <div class="grid grid-3">
+          <article class="card"><h3>Agendamentos</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você liga, espera resposta, compara horários e esquece de colocar no calendário.</div><div class="after"><span class="label">Depois</span>Você manda uma mensagem. A Clawdia busca opções, confirma e te lembra.</div></div></article>
+          <article class="card"><h3>Compras e pesquisas</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você abre dez abas, compara preços e ainda fica inseguro se escolheu bem.</div><div class="after"><span class="label">Depois</span>Você recebe uma seleção objetiva com preço, prazo, prós, contras e recomendação.</div></div></article>
+          <article class="card"><h3>Contas e pagamentos</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você lembra em cima da hora ou perde energia conferindo vencimentos.</div><div class="after"><span class="label">Depois</span>A Clawdia organiza lembretes, prepara pagamentos e só executa com sua aprovação.</div></div></article>
+          <article class="card"><h3>Gestão de e-mails</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você deixa mensagens importantes se perderem no meio da caixa de entrada.</div><div class="after"><span class="label">Depois</span>Ela resume, prioriza, prepara respostas e acompanha pendências.</div></div></article>
+          <article class="card"><h3>Viagens e reservas</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você compara voo, hotel, horário, deslocamento e política de cancelamento.</div><div class="after"><span class="label">Depois</span>Ela monta opções claras, organiza roteiro e deixa tudo pronto para aprovação.</div></div></article>
+          <article class="card"><h3>Contratação de serviços</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você caça prestador, pede orçamento e cobra resposta.</div><div class="after"><span class="label">Depois</span>Ela busca opções, filtra, negocia horários e traz a melhor escolha.</div></div></article>
+          <article class="card"><h3>Relatórios financeiros</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você só percebe gastos quando já passou do ponto.</div><div class="after"><span class="label">Depois</span>Ela organiza informações, cria resumos e te mostra onde seu dinheiro está indo.</div></div></article>
+          <article class="card"><h3>Lembretes inteligentes</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Você depende da memória para lembrar datas, retornos e pequenas obrigações.</div><div class="after"><span class="label">Depois</span>Ela lembra no momento certo e com contexto do que precisa ser feito.</div></div></article>
+          <article class="card"><h3>Organização pessoal</h3><div class="before-after"><div class="before"><span class="label">Antes</span>Sua rotina fica espalhada entre notas, WhatsApp, e-mail e cabeça.</div><div class="after"><span class="label">Depois</span>A Clawdia centraliza pendências e transforma caos em próximos passos.</div></div></article>
+        </div>
+        <div class="cta-row"><a class="btn" href="#ativar">Quero delegar minhas tarefas agora</a><a class="btn secondary" href="#como">Ver como funciona</a></div>
+      </div>
+    </section>
+
+    <section class="conversation-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Exemplos reais de uso</p>
+          <h2>Você conversa como falaria com uma secretária humana.</h2>
+          <p>Sem painel, sem tutorial, sem aprender ferramenta nova.</p>
+        </div>
+        <div class="conversation-grid">
+          <div class="conversation-card"><h3>Conta</h3><div class="chatline me">Clawdia, minha conta de luz vence amanhã. Me lembra e prepara o pagamento.</div><div class="chatline bot">Pronto. Vou te lembrar às 9h. Quando você enviar o boleto, preparo tudo e peço sua confirmação antes de pagar.</div></div>
+          <div class="conversation-card"><h3>Viagem</h3><div class="chatline me">Preciso ir a São Paulo terça cedo e voltar quarta à noite. Pesquisa opções boas.</div><div class="chatline bot">Encontrei 3 combinações com melhor custo/horário. Recomendo a opção 2 porque evita conexão e fica dentro do orçamento.</div></div>
+          <div class="conversation-card"><h3>Serviço</h3><div class="chatline me">Procura alguém para consertar meu ar-condicionado essa semana.</div><div class="chatline bot">Achei 4 técnicos bem avaliados. Dois atendem amanhã. Posso pedir orçamento e disponibilidade?</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="como" class="how">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Como funciona</p>
+          <h2>Mande mensagem. Aprove. Resolvido.</h2>
+          <p>A experiência foi desenhada para ter a menor fricção possível.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><h3>Você pede pelo WhatsApp</h3><p>Escreva como falaria normalmente: “marca”, “compra”, “lembra”, “pesquisa”, “cobra”, “organiza”.</p></div>
+          <div class="step"><h3>A Clawdia executa o operacional</h3><p>Ela pesquisa, compara, agenda, prepara, resume, acompanha e te atualiza sem você microgerenciar.</p></div>
+          <div class="step"><h3>Você aprova o que importa</h3><p>Pagamentos, compras, reservas e decisões sensíveis sempre passam por você antes de qualquer confirmação.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="objections">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Objeções honestas</p>
+          <h2>Você continua no controle. Só deixa de fazer tudo sozinho.</h2>
+        </div>
+        <div class="faq">
+          <details open><summary>Isso é seguro?</summary><p>Sim. A Clawdia deve operar com um modelo de permissões, aprovações e créditos. Ela não precisa ter acesso irrestrito à sua conta bancária principal. Pagamentos e compras sensíveis são preparados e só avançam após sua confirmação.</p></details>
+          <details><summary>Vou perder controle da minha vida?</summary><p>Não. A proposta é o contrário: recuperar controle. A Clawdia reduz ruído operacional e te chama para decidir apenas o que realmente precisa da sua aprovação.</p></details>
+          <details><summary>É difícil usar?</summary><p>Não existe curva de aprendizado. Você não instala um sistema novo nem aprende comandos. Você conversa no WhatsApp.</p></details>
+          <details><summary>Vale a pena pagar por isso?</summary><p>Se você economizar apenas 3 horas por semana, são mais de 12 horas por mês recuperadas — além de menos estresse, menos esquecimento e mais sensação de vida organizada.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section id="preco" class="pricing">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Modelo simples, risco zero no início</p>
+          <h2>Comece grátis. Assine quando fizer sentido.</h2>
+          <p>O modelo comercial foi pensado para alinhar uso real, conveniência e controle de custos.</p>
+        </div>
+        <div class="pricing-grid">
+          <div class="price-card"><span class="tag">Teste grátis</span><h3>Freemium</h3><p>Entre na fase inicial, teste tarefas reais e entenda quanto tempo a Clawdia devolve para sua rotina.</p></div>
+          <div class="price-card featured"><span class="tag">Mais escolhido</span><h3>Assinatura mensal + tokens</h3><p>Uma mensalidade para ter sua secretária ativa, com tokens para executar tarefas, pesquisas e acompanhamentos.</p></div>
+          <div class="price-card"><span class="tag">Flexível</span><h3>Recargas quando precisar</h3><p>Usou mais em uma semana de viagem, mudança ou acúmulo? Recarregue créditos sem trocar de plano.</p></div>
+        </div>
+        <div class="cta-row"><a class="btn dark" href="#ativar">Reservar minha vaga grátis</a></div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="container">
+        <p class="eyebrow">Transformação</p>
+        <h2>De pessoa sobrecarregada para pessoa no controle da própria vida.</h2>
+        <p>As primeiras vagas são limitadas porque a experiência será acompanhada de perto. Se você quer parar de carregar sozinho cada pequena pendência da rotina, este é o momento de entrar.</p>
+        <div class="cta-row"><a class="btn" href="#ativar">Ativar minha secretária grátis agora</a><a class="btn secondary" href="#faz">Ver tudo que ela pode fazer</a></div>
+        <p class="disclaimer">Clawdia está em fase inicial. As funcionalidades finais dependem de integrações e permissões aprovadas pelo usuário.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Clawdia. Secretária pessoal via IA no WhatsApp.</div>
+      <div>Fase inicial • Vagas limitadas • Teste grátis</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function handleLead(event) {
+      event.preventDefault();
+      const phone = document.getElementById('phone').value.trim();
+      if (!phone) return false;
+      localStorage.setItem('clawdia_whatsapp_interest', phone);
+      alert('Perfeito. Seu WhatsApp foi registrado neste protótipo. Para capturar leads de verdade, conecte este formulário a uma API, CRM ou número oficial do WhatsApp Business.');
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -8,19 +8,26 @@
   <meta property="og:title" content="Clawdia — sua secretária pessoal no WhatsApp" />
   <meta property="og:description" content="Delegue tarefas do dia a dia pelo WhatsApp. Menos pendências. Mais tempo livre." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#07140f" />
+  <meta property="og:image" content="https://clawdia.help/assets/clawdia-app-icon.jpg" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#4f46e5" />
   <style>
     :root {
-      --ink: #111312;
-      --muted: #636a66;
-      --soft: #f5f5f3;
+      --ink: #17152a;
+      --muted: #64627a;
+      --soft: #f5f3ff;
       --paper: #ffffff;
-      --dark: #07140f;
-      --dark-2: #0d2018;
-      --line: rgba(17, 19, 18, .10);
-      --green: #25d366;
-      --green-dark: #128c4a;
-      --blue: #0071e3;
+      --dark: #17133f;
+      --dark-2: #211d55;
+      --line: rgba(79, 70, 229, .12);
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --accent: #8b5cf6;
+      --pale: #eeedff;
       --radius: 28px;
       --max: 1120px;
       --shadow: rgba(0, 0, 0, .18) 0 24px 70px -34px;
@@ -45,22 +52,18 @@
       top: 0;
       z-index: 50;
       background: rgba(255, 255, 255, .78);
-      border-bottom: 1px solid rgba(17, 19, 18, .08);
+      border-bottom: 1px solid rgba(79, 70, 229, .10);
       backdrop-filter: saturate(180%) blur(20px);
     }
     .nav-inner { height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
     .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
-    .brand-mark {
-      width: 32px;
+    .brand-logo {
+      width: 42px;
       height: 32px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      color: #06150d;
-      background: linear-gradient(135deg, #e9fff2, var(--green));
-      box-shadow: rgba(37, 211, 102, .26) 0 12px 32px;
+      display: block;
+      object-fit: contain;
     }
-    .nav-links { display: none; align-items: center; gap: 24px; color: rgba(17, 19, 18, .68); font-size: 14px; }
+    .nav-links { display: none; align-items: center; gap: 24px; color: rgba(23, 21, 42, .68); font-size: 14px; }
 
     .btn {
       display: inline-flex;
@@ -78,15 +81,15 @@
       transition: transform .18s ease, background .18s ease, border-color .18s ease;
     }
     .btn:hover { transform: translateY(-1px); }
-    .btn.green { background: var(--green); color: #06150d; }
-    .btn.green:hover { background: #33df75; }
+    .btn.primary { background: var(--primary); color: #fff; }
+    .btn.primary:hover { background: #4338ca; }
     .btn.ghost { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.16); }
     .btn.light { background: #fff; color: var(--ink); box-shadow: rgba(0,0,0,.08) 0 10px 30px -20px; }
 
     .hero {
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at 74% 14%, rgba(37,211,102,.18), transparent 32%), var(--dark);
+      background: radial-gradient(circle at 74% 14%, rgba(139,92,246,.28), transparent 34%), var(--dark);
       color: #fff;
       padding: 76px 0 70px;
     }
@@ -104,7 +107,7 @@
       font-size: 13px;
       margin-bottom: 18px;
     }
-    .status-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 5px rgba(37,211,102,.14); }
+    .status-dot { width: 7px; height: 7px; border-radius: 999px; background: #a5b4fc; box-shadow: 0 0 0 5px rgba(165,180,252,.14); }
     h1, h2, h3 { margin: 0; letter-spacing: -.055em; line-height: .98; }
     h1 { max-width: 850px; font-size: clamp(48px, 10vw, 92px); font-weight: 720; }
     h2 { font-size: clamp(38px, 7vw, 68px); font-weight: 700; }
@@ -117,34 +120,34 @@
     .phone {
       width: min(100%, 390px);
       margin: 0 auto;
-      border: 10px solid #020605;
+      border: 10px solid #09071c;
       border-radius: 44px;
-      background: #e9eee9;
+      background: #eeedf7;
       padding: 14px;
       box-shadow: rgba(0,0,0,.55) 0 40px 100px -44px;
     }
-    .phone-screen { overflow: hidden; border-radius: 32px; background: #e7eee9; min-height: 600px; }
-    .chat-top { background: #10372a; color: #fff; padding: 18px 16px; display: flex; align-items: center; gap: 12px; }
-    .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #effff5, var(--green)); color: #06150d; display: grid; place-items: center; font-weight: 800; }
+    .phone-screen { overflow: hidden; border-radius: 32px; background: #eeedf7; min-height: 600px; }
+    .chat-top { background: var(--primary-dark); color: #fff; padding: 18px 16px; display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; display: block; object-fit: cover; }
     .chat-top strong { display: block; font-size: 16px; }
     .chat-top span { display: block; margin-top: 2px; color: rgba(255,255,255,.78); font-size: 13px; }
     .messages { padding: 18px 14px 16px; display: grid; gap: 10px; }
-    .msg { max-width: 85%; padding: 11px 13px; border-radius: 18px; font-size: 15px; line-height: 1.35; box-shadow: rgba(0,0,0,.06) 0 8px 22px; color: #18241e; }
-    .msg.user { justify-self: end; background: #d9fdd3; color: #12351f; border-bottom-right-radius: 5px; }
-    .msg.bot { justify-self: start; background: #fff; color: #18241e; border-bottom-left-radius: 5px; }
-    .msg small { display: block; margin-top: 5px; color: rgba(24,36,30,.68); opacity: 1; font-size: 11px; text-align: right; }
-    .quick-card { margin: 4px 0 2px; padding: 12px; border-radius: 18px; background: #fff; color: #18241e; border: 1px solid rgba(17,19,18,.06); }
-    .quick-card b { display: block; color: #10372a; margin-bottom: 6px; }
-    .quick-card ul { margin: 0; padding-left: 18px; color: #4d5751; font-size: 14px; line-height: 1.5; }
-    .composer { margin: 2px 14px 14px; border-radius: 999px; background: #fff; padding: 12px 16px; color: #657069; font-size: 14px; }
+    .msg { max-width: 85%; padding: 11px 13px; border-radius: 18px; font-size: 15px; line-height: 1.35; box-shadow: rgba(31,27,76,.08) 0 8px 22px; color: #26243b; }
+    .msg.user { justify-self: end; background: #dddcff; color: #292568; border-bottom-right-radius: 5px; }
+    .msg.bot { justify-self: start; background: #fff; color: #26243b; border-bottom-left-radius: 5px; }
+    .msg small { display: block; margin-top: 5px; color: rgba(38,36,59,.68); opacity: 1; font-size: 11px; text-align: right; }
+    .quick-card { margin: 4px 0 2px; padding: 12px; border-radius: 18px; background: #fff; color: #26243b; border: 1px solid rgba(79,70,229,.08); }
+    .quick-card b { display: block; color: var(--primary-dark); margin-bottom: 6px; }
+    .quick-card ul { margin: 0; padding-left: 18px; color: #57546e; font-size: 14px; line-height: 1.5; }
+    .composer { margin: 2px 14px 14px; border-radius: 999px; background: #fff; padding: 12px 16px; color: #68657d; font-size: 14px; }
 
     .section { padding: 76px 0; }
     .section.soft { background: var(--soft); }
-    .section.dark { background: #050806; color: #fff; }
+    .section.dark { background: #100d2e; color: #fff; }
     .section-head { max-width: 760px; margin-bottom: 34px; }
     .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
-    .section-kicker { margin-bottom: 12px; color: var(--green-dark); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
-    .section.dark .section-kicker { color: var(--green); }
+    .section-kicker { margin-bottom: 12px; color: var(--primary-dark); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .section.dark .section-kicker { color: #c4b5fd; }
     .section-copy { margin-top: 18px; color: var(--muted); font-size: 20px; letter-spacing: -.018em; }
     .section.dark .section-copy { color: rgba(255,255,255,.64); }
 
@@ -156,7 +159,7 @@
       padding: 22px;
       box-shadow: rgba(0,0,0,.05) 0 18px 44px -28px;
     }
-    .pain-card span { display: block; margin-bottom: 18px; color: rgba(17,19,18,.34); font-size: 34px; line-height: 1; }
+    .pain-card span { display: block; margin-bottom: 18px; color: rgba(79,70,229,.38); font-size: 34px; line-height: 1; }
     .pain-card p { margin-top: 10px; color: var(--muted); }
 
     .steps { display: grid; gap: 12px; counter-reset: step; }
@@ -176,8 +179,8 @@
       height: 32px;
       margin-bottom: 28px;
       border-radius: 50%;
-      background: var(--green);
-      color: #06150d;
+      background: var(--primary);
+      color: #fff;
       font-weight: 800;
     }
     .step p { color: rgba(255,255,255,.62); margin-top: 10px; }
@@ -192,7 +195,7 @@
       border: 1px solid var(--line);
       border-radius: 20px;
     }
-    .feature-icon { width: 42px; height: 42px; flex: 0 0 auto; border-radius: 14px; display: grid; place-items: center; background: #eafff1; color: #0b7a3b; font-size: 20px; }
+    .feature-icon { width: 42px; height: 42px; flex: 0 0 auto; border-radius: 14px; display: grid; place-items: center; background: var(--pale); color: var(--primary-dark); font-size: 20px; }
     .feature p { color: var(--muted); margin-top: 4px; font-size: 15px; }
 
     .proof {
@@ -206,7 +209,7 @@
       overflow: hidden;
       position: relative;
     }
-    .proof::after { content: ""; position: absolute; inset: auto -80px -110px auto; width: 240px; height: 240px; border-radius: 50%; background: rgba(37,211,102,.18); filter: blur(6px); }
+    .proof::after { content: ""; position: absolute; inset: auto -80px -110px auto; width: 240px; height: 240px; border-radius: 50%; background: rgba(139,92,246,.28); filter: blur(6px); }
     .proof h2, .proof p, .proof a { position: relative; z-index: 1; }
     .proof p { color: rgba(255,255,255,.66); font-size: 19px; margin-top: 16px; max-width: 680px; }
 
@@ -260,7 +263,7 @@
   <nav class="nav" aria-label="Principal">
     <div class="container nav-inner">
       <a class="brand" href="#top" aria-label="Clawdia">
-        <span class="brand-mark">C</span>
+        <img class="brand-logo" src="assets/clawdia-logo.jpg" alt="" width="42" height="32" />
         <span>Clawdia</span>
       </a>
       <div class="nav-links">
@@ -268,7 +271,7 @@
         <a href="#tarefas">O que resolve</a>
         <a href="#acesso">Acesso</a>
       </div>
-      <a class="btn green" href="#acesso">Entrar na lista</a>
+      <a class="btn primary" href="#acesso">Entrar na lista</a>
     </div>
   </nav>
 
@@ -280,16 +283,16 @@
           <h1>Sua secretária pessoal no WhatsApp.</h1>
           <p class="lead">A Clawdia ajuda você a organizar e resolver tarefas do dia a dia — agenda, contas, compras, reservas, lembretes e pendências pessoais.</p>
           <div class="hero-actions">
-            <a class="btn green" href="#acesso">Quero testar a Clawdia</a>
+            <a class="btn primary" href="#acesso">Quero testar a Clawdia</a>
             <a class="btn ghost" href="#como-funciona">Ver como funciona</a>
           </div>
           <p class="hero-note">Versão inicial com acesso limitado. Produto em construção com usuários selecionados.</p>
         </div>
 
-        <div class="phone" aria-label="Exemplo de conversa no WhatsApp com a Clawdia">
+        <div class="phone" role="img" aria-label="Exemplo de conversa no WhatsApp com a Clawdia">
           <div class="phone-screen">
             <div class="chat-top">
-              <div class="avatar">C</div>
+              <img class="avatar" src="assets/clawdia-avatar.jpg" alt="" width="42" height="42" />
               <div>
                 <strong>Clawdia</strong>
                 <span>online agora</span>
@@ -416,7 +419,7 @@
         </div>
         <form class="signup" action="mailto:contato@clawdia.app" method="post" enctype="text/plain">
           <input type="tel" name="whatsapp" aria-label="Seu WhatsApp" placeholder="Seu WhatsApp com DDD" />
-          <button class="btn green" type="submit">Quero testar</button>
+          <button class="btn primary" type="submit">Quero testar</button>
         </form>
         <p class="fineprint">Sem spam. A proposta é conversar com poucos usuários e evoluir o produto em cima de uso real.</p>
       </div>

@@ -8,9 +8,9 @@
   <meta property="og:title" content="Clawdia — sua secretária pessoal no WhatsApp" />
   <meta property="og:description" content="Delegue tarefas do dia a dia pelo WhatsApp. Menos pendências. Mais tempo livre." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://clawdia.help/assets/clawdia-app-icon.jpg" />
-  <meta property="og:image:width" content="1024" />
-  <meta property="og:image:height" content="1024" />
+  <meta property="og:image" content="https://clawdia.help/assets/clawdia-wordmark-dark.jpg" />
+  <meta property="og:image:width" content="2130" />
+  <meta property="og:image:height" content="660" />
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
@@ -46,6 +46,7 @@
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
     .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
     .nav {
       position: sticky;
@@ -56,10 +57,10 @@
       backdrop-filter: saturate(180%) blur(20px);
     }
     .nav-inner { height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+    .brand { display: inline-flex; align-items: center; }
     .brand-logo {
-      width: 42px;
-      height: 32px;
+      width: 176px;
+      height: 36px;
       display: block;
       object-fit: contain;
     }
@@ -263,8 +264,8 @@
   <nav class="nav" aria-label="Principal">
     <div class="container nav-inner">
       <a class="brand" href="#top" aria-label="Clawdia">
-        <img class="brand-logo" src="assets/clawdia-logo.jpg" alt="" width="42" height="32" />
-        <span>Clawdia</span>
+        <img class="brand-logo" src="assets/clawdia-wordmark-light.jpg" alt="" width="176" height="36" />
+        <span class="sr-only">Clawdia</span>
       </a>
       <div class="nav-links">
         <a href="#como-funciona">Como funciona</a>
